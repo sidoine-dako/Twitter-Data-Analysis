@@ -37,7 +37,7 @@ class TweetDfExtractor:
     # an example function
     def find_statuses_count(self)->list:
         statuses_count = []
-        for tweet in self.tweet:
+        for tweet in self.tweets_list:
             try:
                 statuses_count.append(tweet["user"]["statuses_count"])
             except KeyError:
@@ -45,27 +45,35 @@ class TweetDfExtractor:
 
         
     def find_full_text(self)->list:
-        try:
-            text = self.tweets_list["text"]
-        except KeyError:
-            text = None
+        text = []
+        for tweet in self.tweets_list:
+            try:
+                text.append(tweet["retweeted_status"]["full_text"])
+            except KeyError:
+                text.append(None)
+
        
     
     def find_sentiments(self, text)->list:
+        polarity = []
+        subjectivity = []
+        subjectivity = [TextBlob(txt).sentiment.subjectivity for txt in text]
+        polarity = [TextBlob(txt).sentiment.polarity for txt in text]
         
-        return polarity, self.subjectivity
+        return polarity, subjectivity
 
     def find_created_time(self)->list:
+        created_at = [tweet['created_at'] for tweet in self.tweets_list]
        
         return created_at
 
     def find_source(self)->list:
-        source = 
+        source = [tweet['source'] for tweet in self.tweets_list]
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = [tweet['user']['screen_name'] for tweet in self.tweets_list]
 
     def find_followers_count(self)->list:
         followers_count = 

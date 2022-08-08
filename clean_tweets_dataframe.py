@@ -59,9 +59,6 @@ class Clean_Tweets:
         df['retweet_count'] = pd.to_numeric(df['retweet_count'])
         df['favorite_count'] = pd.to_numeric(df['favorite_count'])
         
-        ----
-        ----
-        
         return df
     
     def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:

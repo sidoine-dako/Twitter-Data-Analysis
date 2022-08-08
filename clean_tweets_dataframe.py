@@ -1,5 +1,4 @@
 # Import the libraries
-import numpy as np
 import pandas as pd
 
 class Clean_Tweets:
@@ -21,7 +20,7 @@ class Clean_Tweets:
         unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
         df.drop(unwanted_rows , inplace=True)
         df = df[df['polarity'] != 'polarity']
-
+        self.df = df
         return df
 
     def drop_duplicate(self, columnId:list)->pd.DataFrame:
@@ -35,7 +34,7 @@ class Clean_Tweets:
         """
         df = self.df
         df.drop_duplicates(subset=columnId)
-
+        self.df = df
         return df
 
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
@@ -47,7 +46,7 @@ class Clean_Tweets:
         ----
         
         df = df[df['created_at'] >= '2020-12-31' ]
-        
+        self.df = df
         return df
     
     def convert_to_numbers(self)->pd.DataFrame:
@@ -60,7 +59,7 @@ class Clean_Tweets:
         df['subjectivity'] = pd.to_numeric(df['subjectivity'])
         df['retweet_count'] = pd.to_numeric(df['retweet_count'])
         df['favorite_count'] = pd.to_numeric(df['favorite_count'])
-
+        self.df = df
         return df
     
     def remove_non_english_tweets(self)->pd.DataFrame:
@@ -70,5 +69,6 @@ class Clean_Tweets:
         
         df = self.df
         df.drop(df[df.lang != 'en'].index,inplace=True)
+        self.df = df
         
         return df

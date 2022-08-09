@@ -50,7 +50,7 @@ class TweetDfExtractor:
             try:
                 text.append(tweet["retweeted_status"]["full_text"])
             except KeyError:
-                text.append(None)
+                text.append(tweet["full_text"])
 
        
     

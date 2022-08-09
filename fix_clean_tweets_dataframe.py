@@ -1,6 +1,12 @@
+# Import the libraries
+import numpy as np
+import pandas as pd
+
 class Clean_Tweets:
     """
-    The PEP8 Standard AMAZING!!!
+    Description:
+    ------------
+    This module helps to clean the data from Twitter.
     """
     def __init__(self, df:pd.DataFrame):
         self.df = df
@@ -9,7 +15,7 @@ class Clean_Tweets:
     def drop_unwanted_column(self, df:pd.DataFrame)->pd.DataFrame:
         """
         remove rows that has column names. This error originated from
-        the data collection stage.  
+        the data collection stage.
         """
         unwanted_rows = df[df['retweet_count'] == 'retweet_count' ].index
         df.drop(unwanted_rows , inplace=True)

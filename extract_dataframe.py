@@ -43,6 +43,8 @@ class TweetDfExtractor:
             except KeyError:
                 statuses_count.append(None)
 
+        return statuses_count
+
         
     def find_full_text(self)->list:
         text = []
@@ -51,6 +53,7 @@ class TweetDfExtractor:
                 text.append(tweet["retweeted_status"]["full_text"])
             except KeyError:
                 text.append(tweet["full_text"])
+
         return text
 
        

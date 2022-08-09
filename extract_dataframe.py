@@ -73,11 +73,11 @@ class TweetDfExtractor:
         return source
 
     def find_screen_name(self)->list:
-        screen_name = [tweet["user"]['screen_name'] for tweet in self.tweets_list]
+        screen_name = [tweet["user"]["screen_name"] for tweet in self.tweets_list]
         return screen_name
 
     def find_followers_count(self)->list:
-        followers_count = [tweet['user']['followers_count'] for tweet in self.tweets_list]
+        followers_count = [tweet["user"]["followers_count"] for tweet in self.tweets_list]
         return followers_count
 
     def find_friends_count(self)->list:
@@ -95,10 +95,20 @@ class TweetDfExtractor:
 
     def find_favourite_count(self)->list:
         favourite_count = []
+        for tweet in self.tweets_list:
+            try:
+                favourite_count.append(tweet["retweeted_status"]["favorite_count"])
+            except:
+                favourite_count.append(None)
         
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+        retweet_count = []
+        for tweet in self.tweets_list:
+            try:
+                retweet_count.append(tweet["retweeted_status"]["retweet_count"])
+            except:
+                retweet_count.append(None)
 
     def find_hashtags(self)->list:
         hashtags = [tweet["entities"]["hashtags"] for tweet in self.tweets_list]

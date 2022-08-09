@@ -37,14 +37,12 @@ class Clean_Tweets:
         self.df = df
         return df
 
-    def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
+    def convert_to_datetime(self, timeCol)->pd.DataFrame:
         """
         convert column to datetime
         """
-        ----
-        
-        ----
-        
+        df = self.df
+        df[timeCol] = pd.to_datetime(df[timeCol])        
         df = df[df['created_at'] >= '2020-12-31' ]
         self.df = df
         return df

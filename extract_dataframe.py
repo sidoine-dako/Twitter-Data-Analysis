@@ -63,12 +63,12 @@ class TweetDfExtractor:
         return polarity, subjectivity
 
     def find_created_time(self)->list:
-        created_at = [tweet['created_at'] for tweet in self.tweets_list]
+        created_at = [tweet["created_at"] for tweet in self.tweets_list]
        
         return created_at
 
     def find_source(self)->list:
-        source = [tweet['source'] for tweet in self.tweets_list]
+        source = [tweet["source"] for tweet in self.tweets_list]
 
         return source
 
@@ -81,14 +81,14 @@ class TweetDfExtractor:
         return followers_count
 
     def find_friends_count(self)->list:
-        friends_count = [tweet['user']['friends_count'] for tweet in self.tweets_list]
+        friends_count = [tweet["user"]["friends_count"] for tweet in self.tweets_list]
         return friends_count
 
     def is_sensitive(self)->list:
         is_sensitive = []
         for tweet in self.tweets_list:
             try:
-                is_sensitive.append(tweet['possibly_sensitive'])
+                is_sensitive.append(tweet["possibly_sensitive"])
             except KeyError:
                 is_sensitive.append(None)
         return is_sensitive

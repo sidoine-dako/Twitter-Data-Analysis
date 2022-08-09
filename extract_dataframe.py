@@ -73,7 +73,7 @@ class TweetDfExtractor:
         return source
 
     def find_screen_name(self)->list:
-        screen_name = [tweet['user']['screen_name'] for tweet in self.tweets_list]
+        screen_name = [tweet["user"]['screen_name'] for tweet in self.tweets_list]
         return screen_name
 
     def find_followers_count(self)->list:
@@ -110,10 +110,12 @@ class TweetDfExtractor:
 
 
     def find_location(self)->list:
-        try:
-            location = self.tweets_list["user"]["location"]
-        except TypeError:
-            location = ''
+        location = []
+        for tweet in self.tweets_list:
+                try:
+                    location.append(tweet["user"]["location"])
+                except TypeError:
+                    location = ''
         
         return location
 

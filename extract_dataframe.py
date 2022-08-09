@@ -111,7 +111,7 @@ class TweetDfExtractor:
         return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags = [tweet["entities"]["hashtags"] for tweet in self.tweets_list]
+        hashtags = [tweet["entities"]["hashtags"]["text"] for tweet in self.tweets_list]
         return hashtags
 
     def find_mentions(self)->list:
@@ -132,7 +132,11 @@ class TweetDfExtractor:
     def find_lang(self)->list:
         lang = [tweet['lang'] for tweet in self.tweets_list]
         return lang
-        
+
+    def clear_text(self,text):
+        temp = [txt.lower() for txt in text]
+        txt_clear = [re.sub(r"(@\[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|http.+?", "", txt) for txt in temp]
+        return txt_clear
         
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
@@ -143,6 +147,7 @@ class TweetDfExtractor:
         created_at = self.find_created_time()
         source = self.find_source()
         text = self.find_full_text()
+        clean_txt = clear_text(text)
         polarity, subjectivity = self.find_sentiments(text)
         lang = self.find_lang()
         fav_count = self.find_favourite_count()
@@ -154,7 +159,7 @@ class TweetDfExtractor:
         hashtags = self.find_hashtags()
         mentions = self.find_mentions()
         location = self.find_location()
-        data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
+        data = zip(created_at, source, text, clean_txt, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
 
         if save:

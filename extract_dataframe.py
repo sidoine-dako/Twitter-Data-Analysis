@@ -36,12 +36,7 @@ class TweetDfExtractor:
 
     # an example function
     def find_statuses_count(self)->list:
-        statuses_count = []
-        for tweet in self.tweets_list:
-            try:
-                statuses_count.append(tweet["user"]["statuses_count"])
-            except KeyError:
-                statuses_count.append(None)
+        statuses_count = [tweet["user"]["statuses_count"] for tweet in self.tweets_list]
 
         return statuses_count
 
@@ -59,8 +54,6 @@ class TweetDfExtractor:
        
     
     def find_sentiments(self, text)->list:
-        polarity = []
-        subjectivity = []
         subjectivity = [TextBlob(txt).sentiment.subjectivity for txt in text]
         polarity = [TextBlob(txt).sentiment.polarity for txt in text]
         
@@ -94,7 +87,7 @@ class TweetDfExtractor:
             try:
                 is_sensitive.append(tweet["possibly_sensitive"])
             except KeyError:
-                is_sensitive.append(None)
+                is_sensitive.append('')
         return is_sensitive
 
     def find_favourite_count(self)->list:
@@ -103,7 +96,8 @@ class TweetDfExtractor:
             try:
                 favourite_count.append(tweet["retweeted_status"]["favorite_count"])
             except:
-                favourite_count.append(None)
+                favourite_count.append(0)
+        return favourite_count
         
     
     def find_retweet_count(self)->list:
@@ -112,7 +106,7 @@ class TweetDfExtractor:
             try:
                 retweet_count.append(tweet["retweeted_status"]["retweet_count"])
             except:
-                retweet_count.append(None)
+                retweet_count.append(0)
 
     def find_hashtags(self)->list:
         hashtags = [tweet["entities"]["hashtags"] for tweet in self.tweets_list]
@@ -133,7 +127,9 @@ class TweetDfExtractor:
         
         return location
 
-    
+    def find_lang(self)->list:
+        lang = [tweet['lang'] for tweet in self.tweets_list]
+        return lang    
         
         
     def get_tweet_df(self, save=False)->pd.DataFrame:

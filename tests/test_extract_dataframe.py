@@ -91,11 +91,15 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.is_sensitive(), ['', '', '', '', ''])
 
 
-    # def test_find_hashtags(self):
-    #     self.assertEqual(self.df.find_hashtags(), )
+    def test_find_hashtags(self):
+        hashtags = [[{'text': 'City', 'indices': [132, 137]}],\
+            [{'text': 'China', 'indices': [18, 24]},{'text': 'Taiwan', 'indices': [98, 105]}],\
+            [{'text': 'XiJinping', 'indices': [127, 137]}],[{'text': 'XiJinping', 'indices': [9, 19]}],[]]
+        self.assertEqual(self.df.find_hashtags(), hashtags)
 
-    # def test_find_mentions(self):
-    #     self.assertEqual(self.df.find_mentions(), )
+    def test_find_mentions(self):
+        mentions =[[{'screen_name': 'i_ameztoy','name': 'Iban Ameztoy','id': 3418339671,'id_str': '3418339671','indices': [3, 13]}],[{'screen_name': 'IndoPac_Info','name': 'Indo-Pacific News - Watching the CCP-China Threat','id': 844136511079559168,'id_str': '844136511079559168','indices': [3, 16]}],[{'screen_name': 'ZelenskyyUa','name': 'Володимир Зеленський','id': 1120633726478823425,'id_str': '1120633726478823425','indices': [90, 102]}],[],[{'screen_name': 'ChinaUncensored','name': 'China Uncensored','id': 833100331,'id_str': '833100331','indices': [3, 19]}]]
+        self.assertEqual(self.df.find_mentions(),mentions)
 
 
 

@@ -23,7 +23,7 @@ class Clean_Tweets:
         self.df = df
         return df
 
-    def drop_duplicate(self, columnId:list)->pd.DataFrame:
+    def drop_duplicate(self, columnId=None)->pd.DataFrame:
         """
         Description:
         ------------
@@ -44,6 +44,7 @@ class Clean_Tweets:
         df = self.df
         df[timeCol] = pd.to_datetime(df[timeCol])        
         df = df[df['created_at'] >= '2020-12-31' ]
+        df['date'] = pd.to_datetime(df['created_at'],format='%y-%m-%d').dt.date
         self.df = df
         return df
     
